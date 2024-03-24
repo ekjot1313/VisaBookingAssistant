@@ -8,8 +8,7 @@ play_times = int(sys.argv[1])
 pygame.init()
 
 # Provide the path to your MP3 file
-mp3_file_path = "/Users/I550652/Downloads/iphone_alarm.mp3"
-
+mp3_file_path = "media/ringtone/alarm.mp3"
 # Load the MP3 file
 pygame.mixer.music.load(mp3_file_path)
 

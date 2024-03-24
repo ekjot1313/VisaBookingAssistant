@@ -2,6 +2,8 @@ import subprocess
 import sys
 
 message = sys.argv[1]
+
+
 def send_imessage(email_address, message):
     # AppleScript to send an iMessage to an email address
     script = f'''

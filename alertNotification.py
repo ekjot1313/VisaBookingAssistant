@@ -1,8 +1,6 @@
+import subprocess
 import sys
 import tkinter as tk
-import subprocess
-import pygame
-import concurrent.futures
 
 date_str = sys.argv[1]
 
