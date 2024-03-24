@@ -38,7 +38,7 @@ date_field_was_not_found_times = 0
 
 def capture_screenshot(filename):
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    screenshot_dir = "screenshots"
+    screenshot_dir = "media/screenshots"
     if not os.path.exists(screenshot_dir):
         os.makedirs(screenshot_dir)
     filepath = os.path.join(screenshot_dir, f"{filename}_{timestamp}.png")
