@@ -1,7 +1,16 @@
 import subprocess
 import sys
+import configparser
 
 message = sys.argv[1]
+
+# Create a configparser object
+config = configparser.ConfigParser()
+
+# Read the properties file
+config.read('project.properties')
+numbers = config.get('Contact', 'numbers').split(',')
+emails = config.get('Contact', 'emails').split(',')
 
 
 def send_imessage(email_address, message):
@@ -16,6 +25,8 @@ def send_imessage(email_address, message):
     subprocess.run(['osascript', '-e', script])
 
 
-# Example usage
-send_imessage("ekjotsingh00776@gmail.com", message)
-send_imessage("+16047044027", message)
+for number in numbers:
+    send_imessage(number, message)
+
+for email in emails:
+    send_imessage(email, message)

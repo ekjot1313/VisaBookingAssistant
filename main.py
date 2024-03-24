@@ -1,3 +1,4 @@
+import configparser
 import os
 import subprocess
 import time
@@ -10,14 +11,19 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-sign_in_url = 'https://ais.usvisa-info.com/en-ca/niv/users/sign_in'
-url = 'https://ais.usvisa-info.com/en-ca/niv/schedule/55028394/appointment'
-username = "jasleenkaur7400@gmail.com"
-password = "Jasleen26$$"
-already_booked_date_str = '02-01-2026'
-you_want_to_confirm_booking = True
-# schedule_start_time = datetime.strptime('04:30:00', '%H:%M:%S').time()
-# schedule_end_time = datetime.strptime('13:30:00', '%H:%M:%S').time()
+# Create a configparser object
+config = configparser.ConfigParser()
+
+# Read the properties file
+config.read('project.properties')
+
+sign_in_url = config.get('URL', 'sign_in_url')
+url = config.get('URL', 'booking_url')
+
+username = config.get('Login', 'username')
+password = config.get('Login', 'password')
+already_booked_date_str = config.get('Booking', 'already_booked_date')
+you_want_to_confirm_booking = config.get('Booking', 'book_automatically') == 'True'
 
 schedule_start_time = datetime.strptime('00:00:00', '%H:%M:%S').time()
 schedule_end_time = datetime.strptime('23:59:59', '%H:%M:%S').time()
@@ -44,6 +50,7 @@ def capture_screenshot(filename):
     filepath = os.path.join(screenshot_dir, f"{filename}_{timestamp}.png")
     driver.save_screenshot(filepath)
     print(f"Screenshot saved: {filepath}")
+
 
 def click_ok_button():
     try:
