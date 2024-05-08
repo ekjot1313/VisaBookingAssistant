@@ -29,6 +29,9 @@ schedule_start_time = datetime.strptime('00:00:00', '%H:%M:%S').time()
 schedule_end_time = datetime.strptime('23:59:59', '%H:%M:%S').time()
 golden_period_start_time = datetime.strptime('04:18:00', '%H:%M:%S').time()
 golden_period_end_time = datetime.strptime('14:39:00', '%H:%M:%S').time()
+# golden_period_start_time = datetime.strptime('00:00:00', '%H:%M:%S').time()
+# golden_period_end_time = datetime.strptime('23:59:59', '%H:%M:%S').time()
+
 
 golden_period_refresh_secs_upper_limit = 10
 maximum_refresh_secs_upper_limit = 600
