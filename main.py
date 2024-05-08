@@ -24,6 +24,7 @@ username = config.get('Login', 'username')
 password = config.get('Login', 'password')
 already_booked_date_str = config.get('Booking', 'already_booked_date')
 you_want_to_confirm_booking = config.get('Booking', 'book_automatically') == 'True'
+fav_consulate = config.get('Booking', 'consulate')
 
 schedule_start_time = datetime.strptime('00:00:00', '%H:%M:%S').time()
 schedule_end_time = datetime.strptime('23:59:59', '%H:%M:%S').time()
@@ -63,6 +64,19 @@ def click_ok_button():
         ok_button.click()
     except Exception as e:
         print("OK button not found or clickable:", e)
+
+
+def click_continue():
+    try:
+        # Find the Continue button by its attributes
+        continue_button = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "//input[@value='Continue']"))
+        )
+
+        # Click on the Continue button
+        continue_button.click()
+    except Exception as e:
+        print("An error occurred while clicking the Continue button:", e)
 
 
 def sign_in(email, pwd):
@@ -324,6 +338,7 @@ def iterate_through_months_indefinitely():
             print('Stopping search because time is out of scheduled range. Now is ', now())
             break
         refresh_page_after_fibonnaci_seconds()
+        select_consulate(fav_consulate)
         iterate_through_months_once()
 
 
@@ -367,6 +382,17 @@ def is_ok_button_available():
         return True
     except Exception:
         print("OK button not found or clickable")
+        return False
+
+
+def is_multiple_applicants_button_available():
+    try:
+        WebDriverWait(driver, 3).until(
+            EC.element_to_be_clickable((By.XPATH, "//input[@value='Continue']"))
+        )
+        return True
+    except Exception:
+        print("Continue button not found or clickable")
         return False
 
 
@@ -423,6 +449,23 @@ def handle_sign_in():
         sign_in(username, password)
         check_checkbox()
         click_sign_in_button()
+    if is_multiple_applicants_button_available():
+        click_continue()
+
+
+def select_consulate(cons):
+    try:
+        consulate_select = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.ID, "appointments_consulate_appointment_facility_id"))
+        )
+        consulate_select.click()
+        consulate_option = consulate_select.find_element(By.XPATH, f"//option[text()='{cons}']")
+        time.sleep(1)
+        print("Selecting consulate: ", cons)
+        consulate_option.click()
+        consulate_select.click()
+    except Exception as e:
+        print("Error in selecting favourite consulate:", e)
 
 
 def start_booking():
