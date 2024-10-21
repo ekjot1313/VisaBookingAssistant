@@ -454,18 +454,19 @@ def handle_sign_in():
 
 
 def select_consulate(cons):
-    try:
-        consulate_select = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.ID, "appointments_consulate_appointment_facility_id"))
-        )
-        consulate_select.click()
-        consulate_option = consulate_select.find_element(By.XPATH, f"//option[text()='{cons}']")
-        time.sleep(1)
-        print("Selecting consulate: ", cons)
-        consulate_option.click()
-        consulate_select.click()
-    except Exception as e:
-        print("Error in selecting favourite consulate:", e)
+    if cons != '':
+        try:
+            consulate_select = WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable((By.ID, "appointments_consulate_appointment_facility_id"))
+            )
+            consulate_select.click()
+            consulate_option = consulate_select.find_element(By.XPATH, f"//option[text()='{cons}']")
+            time.sleep(1)
+            print("Selecting consulate: ", cons)
+            consulate_option.click()
+            consulate_select.click()
+        except Exception as e:
+            print("Error in selecting favourite consulate:", e)
 
 
 def start_booking():
